@@ -11,10 +11,11 @@ export function Note({ onDelete}: NoteProps) {
     return <>
         <div className = "view-note-container">
             <h1>{note.title}</h1>
+            <h2>Tags</h2>
             {note.tags.length > 0 && (
                 <div>
                     {note.tags.map(tag => (
-                        <div className = "view-note-tags" key = {tag.id}>{tag.label}</div>
+                        <ul className="view-note-tags" key={tag.id}><li className = "view-tag">{tag.label}</li></ul>
                     ))}
                     </div>
             )}
@@ -24,21 +25,26 @@ export function Note({ onDelete}: NoteProps) {
                     <button>Edit</button>
                 </Link>
                 </div>
-                <div className = "view-delete-button">
-                <button onClick={() => {
-                    onDelete(note.id)
-                    navigate("/")
-                }}>
-                    Delete
-                </button>
-                </div>
                 <div className = "view-back-button">
                 <Link to = "/journal">
                     <button>Back</button>
                 </Link>
                 </div>
+                <div className="view-delete-button">
+                    <button onClick={() => {
+                        onDelete(note.id)
+                        navigate("/")
+                    }}>
+                        Delete
+                    </button>
+                </div>
             </div>
+            
+                <h2>Body</h2>
+                <div className = "markdown-box">
+                <ReactMarkdown>{note.markdown}</ReactMarkdown>
+            </div>
+            
         </div>
-        <ReactMarkdown>{note.markdown}</ReactMarkdown>
     </>
 }

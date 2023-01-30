@@ -97,14 +97,15 @@ export function NoteList({ availableTags, notes, onUpdateTag, onDeleteTag}: Note
 }
 
 function NoteCard({ id, title, tags }: SimplifiedNote) {
-    return <div className="card">
+    return <div className="scard">
         <Link to={`/${id}`}>
             
         
         {tags.length > 0 && (
-            <div>
+                <div className="note-card">
+                {title}
                 {tags.map(tag => (
-                    <div className= "note-card" key={tag.id}><div className="notecard-title">{title}</div> {tag.label}</div>
+                    <div key={tag.id}><div className="notecard-title"></div> {tag.label}</div>
                 ))}
                 </div>
         )}
@@ -113,20 +114,22 @@ function NoteCard({ id, title, tags }: SimplifiedNote) {
 }
 
 function EditTagsModal({ availableTags, handleClose, show, onDeleteTag, onUpdateTag  }: EditTagsModalProps) {
+    const showHideClassName = show ? "modal display-block" : "modal display-none"
+
     if (!show) {
         return null
     }
 
     return (
-        <div>
-            <div>
+        <div className = {showHideClassName}>
+            <div className = "modal-content">
                 <div>
                     <h4>Edit Tags</h4>
                 </div>
                 <form>
                     <div>
                         {availableTags.map(tag => (
-                            <div key={tag.id}>
+                            <div className = "edit-tag-container" key={tag.id}>
                                 <div>
                                     <input type = "text" value = {tag.label} onChange={e => onUpdateTag(tag.id, e.target.value)} />
                                 </div>
