@@ -35,63 +35,80 @@ export function NoteList({ availableTags, notes, onUpdateTag, onDeleteTag}: Note
         })
     }, [title, selectedTags, notes])
     return (<>
-        <h1>Notes</h1>
-        <Link to="/new">
-           <button>Create</button>
-        </Link>
-        <button onClick={() => setEditTagsModalIsOpen(true)}>Edit Tags</button>
-        <form>
-            <label>Search by Title
-                <input type = "text" value={title} onChange = {e => setTitle(e.target.value)} />
-            </label>
+        
+            <div className = "journal-bar">
+                <h1 className = "journal-header">Notes</h1>
+                <div className = "journal-buttons">
+                <Link to="/new">
+                <button className="create-button">Create</button>
+                </Link>
+                    <button className="edit-button" onClick={() => setEditTagsModalIsOpen(true)}>Edit Tags</button>
+                </div>
+                </div>
             
-
-            <label>Search by Tags
-                <ReactSelect
-                    value={selectedTags.map(tag => {
-                        return { label: tag.label, value: tag.id }
-                    })}
-                    options={availableTags.map(tag => {
-                        return { label: tag.label, value: tag.id }
-                    })}
-                    onChange={tags => {
-                        setSelectedTags(
-                            tags.map(tag => {
-                                return { label: tag.label, id: tag.value }
-                            })
-                        )
-                    }}
-                    isMulti
-                />
-            </label>
-        </form>
-        <div>
+            
+            <form>
+            <div className="search-bar-container">
+                <div className = "title-label">
+                    <label>Search by Title</label>
+                </div>
+                <div className = "title-search">
+                    <input className = "title-search-bar" type="text" value={title} onChange={e => setTitle(e.target.value)} />
+                </div>
+                <div className = "tag-label">
+                    <label>Search by Tags</label>
+                </div>
+                <div className = "tag-search">
+                        <ReactSelect classNamePrefix="react-select"
+                            value={selectedTags.map(tag => {
+                                return { label: tag.label, value: tag.id }
+                            })}
+                            options={availableTags.map(tag => {
+                                return { label: tag.label, value: tag.id }
+                            })}
+                            onChange={tags => {
+                                setSelectedTags(
+                                    tags.map(tag => {
+                                        return { label: tag.label, id: tag.value }
+                                    })
+                                )
+                            }}
+                            isMulti
+                    />
+                </div>
+            </div>
+                </form>
+            
+        
             {filteredNotes.map(note => (
-                <div key={note.id}>
+                <div className = "scard" key={note.id}>
                     <NoteCard id={note.id} title={note.title} tags = {note.tags} />
                 </div>
             ))}
-        </div>  
+         
         <EditTagsModal onUpdateTag={onUpdateTag}
             onDeleteTag={onDeleteTag}
             show={editTagsModalIsOpen}
             handleClose={() => setEditTagsModalIsOpen(false)}
-            availableTags={availableTags} />
+                availableTags={availableTags} />
+        
     </>
     )
 }
 
 function NoteCard({ id, title, tags }: SimplifiedNote) {
-    return <div>
-        <a href={`/${id}`}>{title}</a>
+    return <div className="card">
+        <Link to={`/${id}`}>
+            
+        
         {tags.length > 0 && (
             <div>
                 {tags.map(tag => (
-                    <div key={tag.id}>{title} tags: {tag.label}</div>
+                    <div className= "note-card" key={tag.id}><div className="notecard-title">{title}</div> {tag.label}</div>
                 ))}
                 </div>
         )}
-        
+        </Link>
     </div>
 }
 

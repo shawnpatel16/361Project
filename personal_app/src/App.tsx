@@ -7,6 +7,10 @@ import { NoteList } from './Components/NoteList'
 import { NoteLayout } from './Components/NoteLayout'
 import { Note } from './Components/Note'
 import { EditNote } from './Components/EditNote'
+import Home from './Pages/HomePage'
+import Navbar from './Components/Navbar'
+import About from './Pages/AboutPage'
+
 
 
 export type Note = {
@@ -98,8 +102,13 @@ function App() {
     })
   }
   return (
-    <Routes>
-      <Route path="/"
+    <>
+      <Navbar/>
+    <div>
+      <Routes>
+          <Route path="/" element={<Home />} />
+      <Route path="/about" element = {<About/>} />
+      <Route path="/journal"
         element={<NoteList notes={notesWithTags}
           availableTags={tags}
           onUpdateTag={updateTag}
@@ -111,10 +120,10 @@ function App() {
         <Route index element={<Note onDelete={onDeleteNote} />} />
         <Route path="edit" element={<EditNote onSubmit={onUpdateNote} onAddTag={addTag} availableTags={tags} />} />
       </Route>
-      <Route path="*" element={<Navigate to="/" />} />
-      
-  </Routes>
-        
+      <Route path="*" element={<Navigate to="/journal" />} />
+        </Routes>
+      </div>
+    </>
   )
 }
 

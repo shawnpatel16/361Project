@@ -31,18 +31,26 @@ export function NoteForm({
             markdown: markdownRef.current!.value,
             tags: selectedTags,
         })
-        navigate("..")
+        navigate("/journal")
     }
 
 
     return (
+        <div className = "new-note-container">
         <form onSubmit={handleSubmit}>
-            <label>Title
-                <input type="text" ref={titleRef} required defaultValue={title}/>
-            </label>
-
-            <label>Tags
-                <CreateableReactSelect
+            <div className="search-bar-container">
+                <div className = "title-label">
+                    <label>Title</label>
+                </div>
+                <div className="title-search">
+                    <input className="title-search-bar" type="text" ref={titleRef} required defaultValue={title} />
+                </div>
+            
+                <div className="tag-label">
+                    <label>Tags</label>
+                </div>
+                <div className="tag-search">
+                <CreateableReactSelect classNamePrefix="react-select"
                     onCreateOption={label => {
                         const newTag = { id: uuidV4(), label }
                         onAddTag(newTag)
@@ -62,19 +70,30 @@ export function NoteForm({
                         )
                     }}
                     isMulti
-                />
-            </label>
-
-            <label>Body
-                <textarea required rows={30} cols={50} ref={markdownRef} defaultValue = {markdown} />
-            </label>
-
-            <button type="submit">Save</button>
-            <Link to="..">
-                <button type="button">Cancel</button>
-            </Link>
-
-        </form>
+                    />
+                    </div>
+            
+            </div>
+            <div className="newnote-body">
+            <div className = "body-label">
+                <label>Body</label>
+            </div>
+            <div className = "text-area">
+                <textarea required rows={30} cols={60} ref={markdownRef} defaultValue = {markdown} />
+                    </div>
+            <div className = "save-cancel-buttons">
+            
+                
+                    
+            
+            <Link to="/journal">
+                <button className = "cancel-button" type="button">Cancel</button>
+                            </Link>
+            <button className="save-button" type="submit">Save</button>     
+                    </div>  
+            </div>
+            </form>
+        </div>
     )
 
 }
