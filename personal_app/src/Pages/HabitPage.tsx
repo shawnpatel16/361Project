@@ -60,10 +60,10 @@ export default function Habit() {
     
     return (
         <>
-            <div className="habit-page">
+            <div className="habit-page journal-page">
             <h1>Habit</h1>
                 <p>Choose a healthy habit to follow for the day</p>
-                <div className = "habit-buttons">
+                <div className = "habit-buttons journal-buttons">
                     <button id="random" onClick={getAny}>Random</button>
                     <button id="workout" onClick={getWorkout}>Workout</button>
                     <button id="meal" onClick={getMeal}>Meal</button>

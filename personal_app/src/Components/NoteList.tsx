@@ -138,7 +138,7 @@ function EditTagsModal({ availableTags, handleClose, show, onDeleteTag, onUpdate
                 <div>
                     <h4>Edit Tags</h4>
                 </div>
-                <form>
+                <form className = "edit-tags-form">
                     <div>
                         {availableTags.map(tag => (
                             <div className="edit-tag-container" key={tag.id}>
@@ -146,14 +146,14 @@ function EditTagsModal({ availableTags, handleClose, show, onDeleteTag, onUpdate
                                     <input type="text" value={tag.label} onChange={e => onUpdateTag(tag.id, e.target.value)} />
                                 </div>
                                 <div>
-                                    <button onClick={() => onDeleteTag(tag.id)}>&times;</button>
+                                    <button className = "cancel-button" onClick={() => onDeleteTag(tag.id)}>&times;</button>
                                 </div>
                             </div>
 
                         ))}
                     </div>
                 </form>
-                <button onClick={handleClose}>Close</button>
+                <button className = "edit-tag-close" onClick={handleClose}>Close</button>
 
             </div>
         </div>

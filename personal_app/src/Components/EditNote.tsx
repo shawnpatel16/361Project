@@ -11,9 +11,11 @@ type EditNoteProps = {
 export function EditNote({ onSubmit, onAddTag, availableTags }: EditNoteProps) {
     const note = useNote()
     return(
-    <>
+        <>
+            <div className = "new-note-container">
             <h1>Edit Note</h1>
-            <NoteForm title={note.title} markdown={note.markdown} tags = {note.tags} onSubmit={data => onSubmit(note.id, data)} onAddTag={onAddTag} availableTags={availableTags} />
+                <NoteForm title={note.title} markdown={note.markdown} tags={note.tags} onSubmit={data => onSubmit(note.id, data)} onAddTag={onAddTag} availableTags={availableTags} />
+            </div>
         </>
     )
 }
