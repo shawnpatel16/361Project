@@ -24,7 +24,7 @@ type EditTagsModalProps = {
     onUpdateTag: (id: string, label: string) => void
 }
 
-export function NoteList({ availableTags, notes, onUpdateTag, onDeleteTag}: NoteListProps) {
+export function NoteList({ availableTags, notes, onUpdateTag, onDeleteTag }: NoteListProps) {
     const [selectedTags, setSelectedTags] = useState<Tag[]>([])
     const [title, setTitle] = useState("")
     const [editTagsModalIsOpen, setEditTagsModalIsOpen] = useState(false)
@@ -35,85 +35,97 @@ export function NoteList({ availableTags, notes, onUpdateTag, onDeleteTag}: Note
         })
     }, [title, selectedTags, notes])
     return (<>
-        
-            <div className = "journal-bar">
-                <h1 className = "journal-header">Notes</h1>
-                <div className = "journal-buttons">
+        <div className="journal-page">
+            <div className="journal-bar">
+                <div className = "journal-header">
+                    <h1>Notes</h1>
+                </div>
+            <div className="journal-buttons">
                 <Link to="/new">
-                <button className="create-button">Create</button>
+                    <button className="create-button">Create</button>
                 </Link>
-                    <button className="edit-button" onClick={() => setEditTagsModalIsOpen(true)}>Edit Tags</button>
-                </div>
-                </div>
-            
-            
-            <form>
-            <div className="search-bar-container">
-                <div className = "title-label">
+                <button className="edit-button" onClick={() => setEditTagsModalIsOpen(true)}>Edit Tags</button>
+            </div>
+        </div>
+
+
+        <form className = "search-bar-form">
+                <div className = "search-bar-div">
+                    <div className = "title-bar">
+                <div className="title-label">
                     <label>Search by Title</label>
                 </div>
-                <div className = "title-search">
-                    <input className = "title-search-bar" type="text" value={title} onChange={e => setTitle(e.target.value)} />
-                </div>
-                <div className = "tag-label">
+                <div className="title-search">
+                    <input className="title-search-bar" type="text" value={title} onChange={e => setTitle(e.target.value)} />
+                        </div>
+                    </div>
+                <div className = "tag-bar">
+                <div className="tag-label">
                     <label>Search by Tags</label>
                 </div>
-                <div className = "tag-search">
-                        <ReactSelect classNamePrefix="react-select"
-                            value={selectedTags.map(tag => {
-                                return { label: tag.label, value: tag.id }
-                            })}
-                            options={availableTags.map(tag => {
-                                return { label: tag.label, value: tag.id }
-                            })}
-                            onChange={tags => {
-                                setSelectedTags(
-                                    tags.map(tag => {
-                                        return { label: tag.label, id: tag.value }
-                                    })
-                                )
-                            }}
-                            isMulti
+                <div className="tag-search">
+                    <ReactSelect classNamePrefix="react-select"
+                        value={selectedTags.map(tag => {
+                            return { label: tag.label, value: tag.id }
+                        })}
+                        options={availableTags.map(tag => {
+                            return { label: tag.label, value: tag.id }
+                        })}
+                        onChange={tags => {
+                            setSelectedTags(
+                                tags.map(tag => {
+                                    return { label: tag.label, id: tag.value }
+                                })
+                            )
+                        }}
+                        isMulti
                     />
-                </div>
+                        </div>
+                    </div>
             </div>
-                </form>
-            
-        
-            {filteredNotes.map(note => (
-                <div className = "scard" key={note.id}>
-                    <NoteCard id={note.id} title={note.title} tags = {note.tags} />
-                </div>
-            ))}
-         
+        </form>
+
+        <div className = "journal-list">
+        {filteredNotes.map(note => (
+            <div className="scard" key={note.id}>
+                <NoteCard id={note.id} title={note.title} tags={note.tags} />
+            </div>
+        ))}
+        </div>
         <EditTagsModal onUpdateTag={onUpdateTag}
             onDeleteTag={onDeleteTag}
             show={editTagsModalIsOpen}
             handleClose={() => setEditTagsModalIsOpen(false)}
-                availableTags={availableTags} />
-        
+            availableTags={availableTags} />
+        </div>
     </>
     )
 }
 
 function NoteCard({ id, title, tags }: SimplifiedNote) {
-    return <div className="scard">
+    return <>
         <Link to={`/${id}`}>
-            
-        
-        {tags.length > 0 && (
+
+
+            {tags.length > 0 && (
                 <div className="note-card">
-                {title}
-                {tags.map(tag => (
-                    <div key={tag.id}><div className="notecard-title"></div> {tag.label}</div>
-                ))}
+                    <div className = "note-card-title">
+                        {title}
+                    </div>
+                    <div className="note-card-tags">
+                    {tags.map(tag => (
+                        
+                            <div className="note-card-tag" key={tag.id}> {tag.label}</div>
+                            
+                    ))}
+                    </div>
                 </div>
-        )}
+            )}
         </Link>
-    </div>
+    </>
 }
 
-function EditTagsModal({ availableTags, handleClose, show, onDeleteTag, onUpdateTag  }: EditTagsModalProps) {
+function EditTagsModal({ availableTags, handleClose, show, onDeleteTag, onUpdateTag }: EditTagsModalProps) {
     const showHideClassName = show ? "modal display-block" : "modal display-none"
 
     if (!show) {
@@ -121,31 +133,29 @@ function EditTagsModal({ availableTags, handleClose, show, onDeleteTag, onUpdate
     }
 
     return (
-        <div className = {showHideClassName}>
-            <div className = "modal-content">
+        <div className={showHideClassName}>
+            <div className="modal-content">
                 <div>
                     <h4>Edit Tags</h4>
                 </div>
                 <form>
                     <div>
                         {availableTags.map(tag => (
-                            <div className = "edit-tag-container" key={tag.id}>
+                            <div className="edit-tag-container" key={tag.id}>
                                 <div>
-                                    <input type = "text" value = {tag.label} onChange={e => onUpdateTag(tag.id, e.target.value)} />
+                                    <input type="text" value={tag.label} onChange={e => onUpdateTag(tag.id, e.target.value)} />
                                 </div>
                                 <div>
-                                    <button onClick={()=> onDeleteTag(tag.id)}>&times;</button>
+                                    <button onClick={() => onDeleteTag(tag.id)}>&times;</button>
                                 </div>
-                                </div>
+                            </div>
 
                         ))}
                     </div>
                 </form>
                 <button onClick={handleClose}>Close</button>
-                    
+
             </div>
         </div>
     )
 }
-
-

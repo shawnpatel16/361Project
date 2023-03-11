@@ -10,6 +10,8 @@ import { EditNote } from './Components/EditNote'
 import Home from './Pages/HomePage'
 import Navbar from './Components/Navbar'
 import About from './Pages/AboutPage'
+import Habit from './Pages/HabitPage'
+
 
 
 
@@ -107,7 +109,8 @@ function App() {
     <div>
       <Routes>
           <Route path="/" element={<Home />} />
-      <Route path="/about" element = {<About/>} />
+          <Route path="/about" element={<About />} />
+          <Route path = "/habit" element = {<Habit />}/>
       <Route path="/journal"
         element={<NoteList notes={notesWithTags}
           availableTags={tags}
