@@ -7,7 +7,7 @@ type NewNoteProps = {
     onAddTag: (tag: Tag) => void
     availableTags: Tag[]
 }
-
+// Creating a new note using the noteform component
 export function NewNote({ onSubmit, onAddTag, availableTags }: NewNoteProps) {
     return (
         <>

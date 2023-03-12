@@ -7,6 +7,7 @@ import "./Styles.css"
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
+    {/* Give routing access to app */}
     <BrowserRouter>
       <App />
     </BrowserRouter>

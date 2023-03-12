@@ -69,8 +69,10 @@ export default function Habit() {
                     <button id="meal" onClick={getMeal}>Meal</button>
                     <button id="book" onClick={getBook}>Book</button>
                 </div>
+                <div className = "habit">
                 <p>{data.Type}</p>
                 <p>{data.Description}</p>
+                </div>
 
         </div>
         </>

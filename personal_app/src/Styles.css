@@ -349,6 +349,11 @@ div.react-select__multi-value {
     transition: 0.2s all;
 }
 
+.note-card:hover, .note-card:focus{
+    translate: 0 -5px;
+    box-shadow: 0 5px 8px 0 rgba(255, 255, 255, 0.856);
+}
+
 .note-card-title{
     font-size: x-large;
     font-weight:500;
@@ -597,4 +602,10 @@ button.edit-tag-close:hover{
 .habit-buttons button:hover{
     color:white;
     background-color: #3e8ed0;
+}
+
+.habit-page .habit{
+    margin-top: 2rem;
+    text-align: center;
+    
 }

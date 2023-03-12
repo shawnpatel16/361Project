@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import ReactSelect from "react-select";
 import { Note, Tag } from "../App";
 
-
+// Note type without the markdown to display on the journal page
 type SimplifiedNote = {
     tags: Tag[]
     title: string
@@ -28,9 +28,12 @@ export function NoteList({ availableTags, notes, onUpdateTag, onDeleteTag }: Not
     const [selectedTags, setSelectedTags] = useState<Tag[]>([])
     const [title, setTitle] = useState("")
     const [editTagsModalIsOpen, setEditTagsModalIsOpen] = useState(false)
-
+    // update when title, tags are changed
     const filteredNotes = useMemo(() => {
         return notes.filter(note => {
+            // if title is blank or if note has title we are searching for
+            // if no tags are selected or note has all the tags we are searching for
+            // return true
             return (title === "" || note.title.toLowerCase().includes(title.toLowerCase())) && (selectedTags.length === 0 || selectedTags.every(tag => note.tags.some(noteTag => noteTag.id === tag.id)))
         })
     }, [title, selectedTags, notes])
@@ -48,14 +51,15 @@ export function NoteList({ availableTags, notes, onUpdateTag, onDeleteTag }: Not
             </div>
         </div>
 
-
+        {/* Form for the search by title and tags feature */}
         <form className = "search-bar-form">
                 <div className = "search-bar-div">
                     <div className = "title-bar">
                 <div className="title-label">
                     <label>Search by Title</label>
                 </div>
-                <div className="title-search">
+                        <div className="title-search">
+                            {/* On change, set its title to the title that is being typed in */}
                     <input className="title-search-bar" type="text" value={title} onChange={e => setTitle(e.target.value)} />
                         </div>
                     </div>
@@ -63,7 +67,8 @@ export function NoteList({ availableTags, notes, onUpdateTag, onDeleteTag }: Not
                 <div className="tag-label">
                     <label>Search by Tags</label>
                 </div>
-                <div className="tag-search">
+                        <div className="tag-search">
+                        {/* Get the current tags and allow them to be selected to search by tag */}
                     <ReactSelect classNamePrefix="react-select"
                         value={selectedTags.map(tag => {
                             return { label: tag.label, value: tag.id }
@@ -85,9 +90,11 @@ export function NoteList({ availableTags, notes, onUpdateTag, onDeleteTag }: Not
             </div>
         </form>
 
-        <div className = "journal-list">
+            <div className="journal-list">
+                {/* Display the notes based on the proper title and tags that are passed in */}
         {filteredNotes.map(note => (
             <div className="scard" key={note.id}>
+                {/* using NoteCard function to display */}
                 <NoteCard id={note.id} title={note.title} tags={note.tags} />
             </div>
         ))}
@@ -102,11 +109,13 @@ export function NoteList({ availableTags, notes, onUpdateTag, onDeleteTag }: Not
     )
 }
 
+// NoteCard function which displays just the title and tags and not the markdown
 function NoteCard({ id, title, tags }: SimplifiedNote) {
     return <>
+        {/* Link to the individual page when clicked */}
         <Link to={`/${id}`}>
 
-
+            {/* Displaying the notecard title and tags */}
             {tags.length > 0 && (
                 <div className="note-card">
                     <div className = "note-card-title">
